@@ -15,11 +15,11 @@ import java.util.stream.Stream;
 public class Main {
 
     private static final int STOP_ID = 1;
+    private static final int STOP_R_NR = 2;
     private static final int STOP_NAME = 3;
-    private static final int STOP_DATE = 4;
-    private static final int STOP_LAT = 5;
-    private static final int STOP_LON = 6;
-    private static final int STOP_R_NR = 7;
+    private static final int STOP_LAT = 4;
+    private static final int STOP_LON = 5;
+    private static final int STOP_DATE = 6;
     private static final int LEG_FROM = 1;
     private static final int LEG_TO = 2;
     private static final int LEG_DURATION = 3;
@@ -114,14 +114,13 @@ public class Main {
                 if (stop.getStopId() == from.getStopId()) {
                     graph.addEdge(stop, to, leg.getDuration());
                 }
-                if (stop.getStopId() == to.getStopId()) {
+*//*                if (stop.getStopId() == to.getStopId()) {
                     graph.addEdge(from, stop, leg.getDuration());
-                }
+                }*//*
 
             }
 
         }*/
-
 
 
         String schedule1 = "05:50:00 06:05:00 06:08:00 06:15:00 06:20:00 06:26:00 06:30:00 06:35:00 06:40:00 06:42:00 06:51:00 06:55:00 06:58:00 07:01:00 07:10:00 07:13:00 07:15:00 07:19:00 07:27:00 07:29:00 07:34:00 07:36:00 07:44:00 07:51:00 07:52:00 07:58:00 07:59:00 08:05:00 08:10:00 08:11:00 08:18:00 08:21:00 08:24:00 08:28:00 08:31:00 08:37:00 08:41:00 08:43:00 08:44:00 08:50:00 08:52:00 08:57:00 08:59:00 09:02:00 09:03:00 09:09:00 09:11:00 09:12:00 09:16:00 09:22:00 09:23:00 09:26:00 09:31:00 09:32:00 09:34:00 09:38:00 09:40:00 09:45:00 09:49:00 09:53:00 09:56:00 09:58:00 10:00:00 10:07:00 10:08:00 10:16:00 10:18:00 10:24:00 10:25:00 10:29:00 10:32:00 10:34:00 10:39:00 10:40:00 10:43:00 10:47:00 10:51:00 10:55:00 10:59:00 11:01:00 11:03:00 11:07:00 11:11:00 11:12:00 11:15:00 11:19:00 11:22:00 11:23:00 11:27:00 11:31:00 11:32:00 11:35:00 11:39:00 11:42:00 11:43:00 11:47:00 11:51:00 11:52:00 11:55:00 11:59:00 12:02:00 12:03:00 12:07:00 12:11:00 12:12:00 12:15:00 12:19:00 12:22:00 12:23:00 12:27:00 12:31:00 12:32:00 12:35:00 12:39:00 12:42:00 12:43:00 12:47:00 12:51:00 12:52:00 12:55:00 12:59:00 13:02:00 13:03:00 13:07:00 13:11:00 13:12:00 13:15:00 13:19:00 13:22:00 13:23:00 13:27:00 13:31:00 13:32:00 13:35:00 13:39:00 13:42:00 13:43:00 13:47:00 13:51:00 13:52:00 13:55:00 13:59:00 14:02:00 14:03:00 14:07:00 14:11:00 14:12:00 14:15:00 14:19:00 14:22:00 14:23:00 14:27:00 14:31:00 14:32:00 14:35:00 14:39:00 14:42:00 14:43:00 14:46:00 14:51:00 14:52:00 14:53:00 14:59:00 15:00:00 15:02:00 15:06:00 15:07:00 15:12:00 15:13:00 15:15:00 15:19:00 15:22:00 15:23:00 15:26:00 15:31:00 15:32:00 15:39:00 15:42:00 15:45:00 15:47:00 15:52:00 15:55:00 15:59:00 16:02:00 16:03:00 16:05:00 16:11:00 16:12:00 16:18:00 16:19:00 16:22:00 16:25:00 16:27:00 16:31:00 16:32:00 16:35:00 16:38:00 16:42:00 16:43:00 16:44:00 16:51:00 16:52:00 16:57:00 17:01:00 17:02:00 17:04:00 17:10:00 17:12:00 17:17:00 17:19:00 17:21:00 17:23:00 17:28:00 17:30:00 17:31:00 17:36:00 17:37:00 17:41:00 17:43:00 17:47:00 17:49:00 17:51:00 17:56:00 18:01:00 18:02:00 18:04:00 18:09:00 18:10:00 18:11:00 18:16:00 18:18:00 18:21:00 18:22:00 18:27:00 18:29:00 18:32:00 18:36:00 18:37:00 18:43:00 18:47:00 18:50:00 18:54:00 18:57:00 19:02:00 19:05:00 19:07:00 19:10:00 19:16:00 19:17:00 19:18:00 19:27:00 19:36:00 19:37:00 19:38:00 19:45:00 19:47:00 19:49:00 19:55:00 19:57:00 20:00:00 20:04:00 20:07:00 20:11:00 20:14:00 20:17:00 20:22:00 20:23:00 20:27:00 20:33:00 20:34:00 20:37:00 20:43:00 20:46:00 20:47:00 20:53:00 20:58:00 21:03:00 21:09:00 21:11:00 21:13:00 21:22:00 21:23:00 21:33:00 21:36:00 21:41:00 21:46:00 21:50:00 21:51:00 22:00:00 22:04:00 22:16:00 22:18:00 22:31:00 22:32:00 22:47:00 23:02:00 23:05:00 23:18:00 23:25:00 23:34:00 23:45:00 23:51:00 24:04:00 24:08:00 24:24:00";
@@ -169,7 +168,7 @@ public class Main {
 
 
 
-        Leg leg1 = new Leg(stop1,stop2,2);
+        Leg leg1 = new Leg(stop1,stop2,5);
         Leg leg2 = new Leg(stop2,stop4,3);
         Leg leg3 = new Leg(stop1,stop3,3);
         Leg leg4 = new Leg(stop3,stop4,4);
@@ -196,66 +195,41 @@ public class Main {
         graph.addVertex(stop4);
 
         List<Stop> stopsT = new ArrayList<>(Arrays.asList(stop1,stop2,stop3,stop4));
-        List<Leg> legsT = new ArrayList<>(Arrays.asList(leg1,leg2,leg3));
+        List<Leg> legsT = new ArrayList<>(Arrays.asList(leg1,leg2,leg3,leg4));
+
+        legsT.forEach(item -> graph.addEdge(item.getFrom(),item.getTo(),item.getDuration()));
 
 
-        for (Stop stop : stopsT) {
+
+/*        for (Stop stop : stopsT) {
             for (Leg leg : stop.getLegs()) {
                 Stop from = leg.getFrom();
                 Stop to = leg.getTo();
                 if (stop.getStopId() == from.getStopId()) {
                     graph.addEdge(stop, to, leg.getDuration());
                 }
-/*                if (stop.getStopId() == to.getStopId()) {
+                if (stop.getStopId() == to.getStopId()) {
                     graph.addEdge(from, stop, leg.getDuration());
-                }*/
+                }
 
             }
-        }
+        }*/
         Dijkstra path = new Dijkstra();
 
-        Map<Stop, Path> paths = path.getShortestPathsFromVertex(graph, stop1, LocalTime.parse("14:00:00"));
-/*        System.out.println(paths);*/
+
+
+        Map<Stop, Path> paths = path.getShortestPathsFromVertex(graph, stop1,stop4, LocalTime.parse("14:00:00"));
+
+/*        for (int i = 0; i <5 ; i++) {
+            System.out.println(paths.get(stops.get(i)));
+        }*/
+
+/*        System.out.println(stops.get(2));
+        System.out.println(stops.get(0));*/
+
         System.out.println(paths.get(stop4));
 
 
-
-/*        for (int i = 0; i <stops.size(); i++) {
-            System.out.println("----------------------");
-            System.out.println(stops.get(i).getLegs() + "|||" + stops.get(i));
-        }*/
-
-/*        System.out.println(stops.stream().filter(i -> i.getStopId()==1078).collect(Collectors.toList()));*/
-
-/*
-
-        Dijkstra path = new Dijkstra();
- */
-/*       System.out.println(stops.get(0));
-
-        Map<Stop, Path> paths = path.getShortestPathsFromVertex(graph, stops.get(0));
-        System.out.println(stops.get(60));
-        System.out.println(paths.get(stops.get(60)));*//*
-
-
-        List<LocalTime> times = new ArrayList<>(Arrays.asList(LocalTime.parse("18:15:30"),LocalTime.parse("19:15:30"),LocalTime.parse("20:15:30")));
-        LocalTime date5 = LocalTime.parse("20:15:10");
-        System.out.println(times.stream().filter(item -> item.isAfter(LocalTime.parse("18:00:30"))).findFirst().get());
-
-        System.out.println("date5: " + date5);
-
-
-        System.out.println(stops.get(0).getSchedule());
-
-*/
-
-/*        System.out.println(stops);
-
-
-        System.out.println(paths);*/
-
-
-/*        System.out.println(legs);*/
     }
 }
 

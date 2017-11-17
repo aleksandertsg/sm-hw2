@@ -83,6 +83,7 @@ public class Stop {
         this.schedule = schedule;
     }
 
+
     @Override
     public String toString() {
         return "Stop{" +
@@ -93,4 +94,5 @@ public class Stop {
                 ", routeNr=" + routeNr +
                 '}';
     }
+
 }

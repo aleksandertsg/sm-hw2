@@ -45,7 +45,6 @@ public class GraphImpl{
             }
             else{
                 graph.get(one).put(other, edge);
-/*                graph.get(other).put(one, edge);*/
                 return true;
             }
         }

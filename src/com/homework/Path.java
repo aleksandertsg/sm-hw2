@@ -1,20 +1,24 @@
 package com.homework;
 
+import java.time.LocalTime;
+
 public class Path {
 
-    public final Stop stop;
-    public final Path next;
+    private Stop stop;
+    private Path path;
+    private LocalTime time;
 
-    public Path(Stop stop, Path next) {
+    public Path(Stop stop, Path path, LocalTime time) {
         this.stop = stop;
-        this.next = next;
+        this.path = path;
+        this.time = time;
     }
 
     @Override
     public String toString(){
-        if (next == null){
-            return stop.toString();
+        if (path == null){
+            return "Start: "+time+" from: "+stop.toString();
         }
-        return next.toString() + " --- " + stop.toString();
+        return path.toString() + " Arriving at:  " + time +   " at stop " +stop.toString();
     }
 }

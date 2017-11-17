@@ -9,7 +9,7 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 
 public class Dijkstra{
 
-    public Map<Stop, Path> getShortestPathsFromVertex(GraphImpl graph, Stop startingVertex, LocalTime time) {
+    public Map<Stop, Path> getShortestPathsFromVertex(GraphImpl graph, Stop startingVertex, Stop endingPoint, LocalTime time) {
         Map<Stop, Path> paths = new HashMap<>();
         Map<Stop, Double> distances = new HashMap<>();
         Map<Stop, LocalTime> times = new HashMap<>();
@@ -29,7 +29,7 @@ public class Dijkstra{
         }
 
 
-        paths.put(startingVertex, new Path(startingVertex, null));
+        paths.put(startingVertex, new Path(startingVertex, null,time));
         distances.put(startingVertex, 0.0);
         times.put(startingVertex,time);
         unprocessedVertices.add(startingVertex);
@@ -38,40 +38,40 @@ public class Dijkstra{
             Stop minVertex = unprocessedVertices.remove();
             System.out.println(minVertex);
             System.out.println("MINVERTEX");
-            Optional<LocalTime> optTimeStart = minVertex.getSchedule().getTimes().stream().filter(item -> item.isAfter(times.get(minVertex)) || item.equals(times.get(minVertex))).findFirst();
-            long tTimeStart = optTimeStart.map(localTime -> Duration.between(times.get(minVertex), localTime).toMinutes()).orElse(Long.MAX_VALUE);
-            LocalTime finalTime = times.get(minVertex).plusMinutes(tTimeStart);
-            times.put(minVertex,finalTime);
-            System.out.println(finalTime+"HERETIME");
+            if(minVertex!=endingPoint) {
+                LocalTime minBusStartTime = minVertex.getSchedule().getTimes().stream().min((d1, d2) -> compare(d1, d2, times.get(minVertex))).get();
+                System.out.println(minBusStartTime+"STARTTIMEBUSTIME");
+                times.put(minVertex,minBusStartTime);
+            }
+            else{
+                System.out.println("Arrived at:"+times.get(minVertex));
+            }
+
+
 
 
 
             for (Stop neighbor : graph.neighborsOf(minVertex)) {
-                System.out.println(finalTime+" TIME");
-                System.out.println(neighbor+ "; NEIGH");
-                System.out.println(distances.get(neighbor)+";NEIDIST");
-                Long a = new Long(graph.getEdge(minVertex, neighbor));
-                System.out.println(finalTime.plusMinutes(a)+"TOBEHERE");
-                LocalTime timeAtNeigh = finalTime.plusMinutes(a);
-                Optional<LocalTime> optTime = neighbor.getSchedule().getTimes().stream().filter(item -> item.isAfter(timeAtNeigh) || item.equals(timeAtNeigh)).findFirst();
-                long tTime;
+                System.out.println(neighbor+"NEIGHBOUR");
+                long tripDuration = graph.getEdge(minVertex,neighbor);
+                LocalTime arrivingTime = times.get(minVertex).plusMinutes(tripDuration);
+                double totalTripTime = Duration.between(time,arrivingTime).toMinutes();
+                System.out.println(tripDuration+"tripDuration");
+                System.out.println(arrivingTime+"arrivingTIME");
+                System.out.println(totalTripTime+"totalTripTime");
 
 
-                tTime = optTime.map(localTime -> Duration.between(timeAtNeigh, localTime).toMinutes()).orElse(Long.MAX_VALUE);
 
-                Long total = Duration.between(time,timeAtNeigh.plusMinutes(tTime)).toMinutes();
-                System.out.println(tTime+"TOWAIT");
-                System.out.println(distances.get(minVertex)+"DURATIONTOHERE");
-                System.out.println(total+"TOTAL DURATION WEIGHT");
-                Double altPathWeight = distances.get(minVertex) + Double.parseDouble(total.toString());
+
+                Double altPathWeight = distances.get(minVertex) + totalTripTime;
                 if (distances.get(neighbor) > altPathWeight) {
                     distances.put(neighbor, altPathWeight);
-                    paths.put(neighbor, new Path(neighbor, paths.get(minVertex)));
-                    times.put(neighbor,timeAtNeigh.plusMinutes(tTime));
+                    System.out.println("PANEN KOKKU");
+                    System.out.println(neighbor);
+                    paths.put(neighbor, new Path(neighbor, paths.get(minVertex),arrivingTime));
+                    times.put(neighbor,arrivingTime);
 
                     if (!unprocessedVertices.contains(neighbor)) {
-                        System.out.println("POLE PROTSESSITUD");
-                        System.out.println(neighbor+"NSA");
                         unprocessedVertices.add(neighbor);
                     }
                 }
@@ -85,5 +85,21 @@ public class Dijkstra{
 
     public Stop getShortest(GraphImpl graph, Stop from, Stop to){
         return null;
+    }
+
+
+    private int compare(LocalTime d1, LocalTime d2,LocalTime time){
+
+        long diff1 = Duration.between(time,d1).toMinutes();
+        long diff2 = Duration.between(time,d2).toMinutes();
+        if(diff1<0){
+            diff1 = diff1 + 24 * 60;
+        }
+        if(diff2<0){
+            diff2 = diff2 + 24 * 60;
+        }
+
+        return Integer.compare(Math.toIntExact(diff1), Math.toIntExact(diff2));
+
     }
 }
