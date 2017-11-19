@@ -18,8 +18,8 @@ import java.util.stream.Stream;
 public class DataLoader {
 
 
-    private static String LEG_FILE = "data/edges.csv";
-    private static String TRAM_FILE = "data/tram_stops.csv";
+    private static String LEG_FILE = "src/main/resources/data/edges.csv";
+    private static String TRAM_FILE = "src/main/resources/data/tram_stops.csv";
 
     private List<Stop> stops;
     private List<Leg> legs;

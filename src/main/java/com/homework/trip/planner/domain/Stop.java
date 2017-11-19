@@ -25,6 +25,13 @@ public class Stop {
         this.route = route;
     }
 
+    public Stop(String name, float lat, float lon, Schedule schedule) {
+        this.name = name;
+        this.lat = lat;
+        this.lon = lon;
+        this.schedule = schedule;
+    }
+
     public Stop() {
 
     }
@@ -99,13 +106,7 @@ public class Stop {
 
     @Override
     public String toString() {
-        return "Stop{" +
-                "stopId=" + stopId +
-                ", name='" + name + '\'' +
-                ", lat=" + lat +
-                ", lon=" + lon +
-                ", routeNr=" + routeNr +
-                '}';
+        return name+"("+routeNr+")";
     }
 
 

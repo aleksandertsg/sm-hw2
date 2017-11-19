@@ -18,6 +18,10 @@ public class TripPlan {
         this.stops = new ArrayList<>();
     }
 
+    public TripPlan(String fullPath) {
+        this.fullPath = fullPath;
+    }
+
     public LocalTime getStartTime() {
         return startTime;
     }

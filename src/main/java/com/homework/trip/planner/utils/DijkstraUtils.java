@@ -1,10 +1,13 @@
 package com.homework.trip.planner.utils;
 
+import com.homework.trip.planner.data.DataLoader;
+import com.homework.trip.planner.domain.Schedule;
 import com.homework.trip.planner.domain.Stop;
 
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class DijkstraUtils {
 
@@ -36,11 +39,11 @@ public class DijkstraUtils {
     }
 
 
-    public Map<Stop,LocalTime> getPath(GraphUtils graph, Stop startingVertex, Stop endingPoint, LocalTime time) {
+    public LinkedHashMap<Stop,LocalTime> getPath(GraphUtils graph, Stop startingVertex, Stop endingPoint, LocalTime time) {
 
         Map<Stop, Double> distances = new HashMap<>();
         Map<Stop, LocalTime> times = new HashMap<>();
-        Map<Stop,Map<Stop,LocalTime>> path = new HashMap<>();
+        Map<Stop,LinkedHashMap<Stop,LocalTime>> path = new HashMap<>();
 
 
         Queue<Stop> unprocessedVertices = new PriorityQueue<>((one, other) -> {
@@ -131,7 +134,43 @@ public class DijkstraUtils {
 
 
 
+    public LinkedHashMap<Stop,LocalTime> findOptimalPath(float latFrom, float lonFrom, float latTo, float lonTo,LocalTime time){
 
+
+        DataLoader data = new DataLoader();
+
+        GraphUtils graph = new GraphUtils();
+
+        graph.createGraph(data.getStops(),data.getLegs());
+
+        Stop from = findClosestStop(data.getStops(),latFrom,lonFrom);
+
+        Stop to = findClosestStop(data.getStops(),latTo,lonTo);
+
+        Float fromDistance =distFrom(latFrom,lonFrom,from.getLat(),from.getLon());
+
+        Float toDistance =distFrom(latTo,lonTo,to.getLat(),to.getLon());
+
+        LocalTime startTime = time.plusMinutes(calculateWalkingMinutes(fromDistance));
+
+        LinkedHashMap<Stop,LocalTime> path = getPath(graph,from,to,startTime);
+
+        LocalTime finalTime = path.get(path.keySet().stream().reduce((first, second) -> second).get());
+
+        Stop end = new Stop("End",latFrom,lonFrom, new Schedule(new ArrayList<>()));
+
+        path.put(end,finalTime.plusMinutes(calculateWalkingMinutes(toDistance)));
+
+
+        return path;
+    }
+
+
+    private int calculateWalkingMinutes(Float meters){
+
+        return (int) Math.ceil((meters/1000)*10);
+
+    }
 
 
 
