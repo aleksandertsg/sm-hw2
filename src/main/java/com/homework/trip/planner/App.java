@@ -7,29 +7,26 @@ import java.io.Console;
 
 public class App {
 
+  public static void main(String[] args) {
+    System.out.println("HELLO WORLD");
 
-
-    public static void main(String[] args) {
-        System.out.println("HELLO WORLD");
-
-
-/*        Console console = System.console();
+    /*
+    Console console = System.console();
         if (console == null) {
             System.out.println("No console: non-interactive mode!");
             System.exit(0);
-        }*/
-        String time = "14:00";
+        }
+    */
 
-        TripPlanBuilder tripPlanBuilder = new TripPlanBuilder();
+    String time = "14:03";
 
-        TripPlan tripPlan = tripPlanBuilder.createTripPlan(59.414665f, 24.737735f,59.450498f, 24.710056f, time);
+    TripPlanBuilder tripPlanBuilder = new TripPlanBuilder();
 
-        System.out.println(tripPlan.getFullPath());
+    TripPlan tripPlan = tripPlanBuilder.createTripPlan(59.417229f, 24.797322f, 59.421008f, 24.739687f, time);
 
+    System.out.println(tripPlan.getFullPath());
 
-
-
-    }
+  }
 }
 
 
