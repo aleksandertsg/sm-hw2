@@ -1,4 +1,4 @@
-package com.homework;
+package com.homework.trip.planner.domain;
 
 public class Leg {
     private Stop from;

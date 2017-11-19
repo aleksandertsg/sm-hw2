@@ -1,4 +1,4 @@
-package com.homework;
+package com.homework.trip.planner.domain;
 
 import java.time.LocalTime;
 import java.util.List;

@@ -1,11 +1,14 @@
-package com.homework;
+package com.homework.trip.planner.utils;
+
+import com.homework.trip.planner.domain.Leg;
+import com.homework.trip.planner.domain.Stop;
 
 import java.util.*;
 
-public class GraphImpl{
+public class GraphUtils {
     private Map<Stop, Map<Stop, Integer>> graph = new HashMap<>();
 
-    public boolean addVertex(Stop vertex) {
+    private boolean addStop(Stop vertex) {
         if (graph.containsKey(vertex)){
             return false;
         }
@@ -18,25 +21,11 @@ public class GraphImpl{
 
     }
 
-    public boolean removeVertex(Stop vertex) {
-        if (graph.containsKey(vertex)){
-            Set<Stop> keySet = graph.get(vertex).keySet();
-            for (Stop key : keySet){
-                graph.get(key).remove(vertex);
-            }
-            graph.remove(vertex);
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    public Set<Stop> getVertices() {
+    protected Set<Stop> getVertices() {
         return graph.keySet();
     }
 
-    public boolean addEdge(Stop one, Stop other, Integer edge) {
+    private boolean addLeg(Stop one, Stop other, Integer edge) {
         if (graph.containsKey(one)){
             Map<Stop,Integer> map = new HashMap<>();
             map.put(other, edge);
@@ -53,24 +42,8 @@ public class GraphImpl{
         }
     }
 
-    public boolean removeEdge(Stop one, Stop other) {
-        if (graph.containsKey(one) && graph.containsKey(other)){
-            if (graph.get(one).containsKey(other)){
-                graph.get(one).remove(other);
-                graph.get(other).remove(one);
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
 
-        else{
-            return false;
-        }
-    }
-
-    public Set<Stop> neighborsOf(Stop vertex) {
+    protected Set<Stop> neighborsOf(Stop vertex) {
 
         if (graph.containsKey(vertex)){
             return graph.get(vertex).keySet();
@@ -82,7 +55,7 @@ public class GraphImpl{
 
     }
 
-    public Integer getEdge(Stop one, Stop other) {
+    protected Integer getEdge(Stop one, Stop other) {
         if (graph.containsKey(one)){
             if (graph.get(one).containsKey(other)){
                 return graph.get(one).get(other);
@@ -93,8 +66,25 @@ public class GraphImpl{
                 return graph.get(other).get(one);
             }
         }
-        // This edge doesn't exist
         return null;
+    }
+
+
+
+    public void createGraph(List<Stop> stops, List<Leg> legs){
+        stops.forEach(this::addStop);
+        legs.forEach(item -> addLeg(item.getFrom(),item.getTo(),item.getDuration()));
+
+        for (Stop stop1 : stops) {
+
+            for (Stop stop2 : stops) {
+                if(Objects.equals(stop1.getName(), stop2.getName())){
+                    addLeg(stop1,stop2,0);
+                }
+
+            }
+
+        }
 
     }
 

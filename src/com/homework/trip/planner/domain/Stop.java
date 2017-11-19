@@ -1,27 +1,32 @@
-package com.homework;
+package com.homework.trip.planner.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Stop {
 
     private int stopId;
     private String name;
-    private double lat;
-    private double lon;
+    private float lat;
+    private float lon;
     private int routeNr;
     private List<Leg> legs = new ArrayList<>();
     private Schedule schedule;
+    private Route route;
 
 
-    public Stop(int stopId, String name, double lat, double lon, int routeNr, Schedule schedule) {
+    public Stop(int stopId, String name, float lat, float lon, int routeNr, Schedule schedule, Route route) {
         this.stopId = stopId;
         this.name = name;
         this.lat = lat;
         this.lon = lon;
         this.routeNr = routeNr;
         this.schedule = schedule;
+        this.route = route;
+    }
+
+    public Stop() {
+
     }
 
     public int getStopId() {
@@ -40,19 +45,19 @@ public class Stop {
         this.name = name;
     }
 
-    public double getLat() {
+    public float getLat() {
         return lat;
     }
 
-    public void setLat(double lat) {
+    public void setLat(float lat) {
         this.lat = lat;
     }
 
-    public double getLon() {
+    public float getLon() {
         return lon;
     }
 
-    public void setLon(double lon) {
+    public void setLon(float lon) {
         this.lon = lon;
     }
 
@@ -83,6 +88,14 @@ public class Stop {
         this.schedule = schedule;
     }
 
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
+    }
+
 
     @Override
     public String toString() {
@@ -94,5 +107,6 @@ public class Stop {
                 ", routeNr=" + routeNr +
                 '}';
     }
+
 
 }
