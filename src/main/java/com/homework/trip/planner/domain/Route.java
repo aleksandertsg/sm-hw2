@@ -7,7 +7,7 @@ public class Route {
 
   private int routeNr;
   private String routeName;
-  private List<Stop> stops = new ArrayList<>();
+  private List<Location> locations = new ArrayList<>();
 
   public Route(int routeNr, String routeName) {
     this.routeNr = routeNr;
@@ -30,16 +30,16 @@ public class Route {
     this.routeNr = routeNr;
   }
 
-  public List<Stop> getStops() {
-    return stops;
+  public List<Location> getStops() {
+    return locations;
   }
 
-  public void setStops(List<Stop> stops) {
-    this.stops = stops;
+  public void setStops(List<Location> locations) {
+    this.locations = locations;
   }
 
-  public Route addStop(Stop stop) {
-    this.stops.add(stop);
+  public Route addStop(Location location) {
+    this.locations.add(location);
     return this;
   }
 
@@ -48,7 +48,7 @@ public class Route {
     return "Route{" +
       "routeNr=" + routeNr +
       ", routeName='" + routeName + '\'' +
-      ", stops=" + stops +
+      ", stops=" + locations +
       '}';
   }
 }

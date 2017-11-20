@@ -1,5 +1,6 @@
 package com.homework.trip.planner.utils;
 
+import com.homework.trip.planner.domain.Location;
 import com.homework.trip.planner.domain.Stop;
 import com.homework.trip.planner.data.DataLoader;
 import com.homework.trip.planner.domain.TripPlan;
@@ -9,8 +10,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TripPlanBuilder {
 
@@ -23,7 +24,8 @@ public class TripPlanBuilder {
     graph.createGraph(data.getStops(), data.getLegs());
 
     DijkstraUtils path = new DijkstraUtils();
-    LocalTime startingTime = null;
+
+    LocalTime startingTime;
 
     try {
       startingTime = LocalTime.parse(time, DateTimeFormatter.ISO_TIME);
@@ -36,15 +38,15 @@ public class TripPlanBuilder {
 
   }
 
-  private TripPlan createFullPath(Map<Stop, LocalTime> path, LocalTime startingTime) {
+  private TripPlan createFullPath(LinkedHashMap<Stop, LocalTime> path, LocalTime startingTime) {
     TripPlan tripPlan = new TripPlan();
     StringBuilder completePath = new StringBuilder();
     if (path == null) {
       completePath.append("Sorry, we can't find available plan for you :( ");
     } else {
-      List<Stop> keyList = new ArrayList<>(path.keySet());
+      List<Location> keyList = new ArrayList<>(path.keySet());
       for (int i = 0; i < keyList.size(); i++) {
-        Stop k = keyList.get(i);
+        Stop k = (Stop) keyList.get(i);
         LocalTime v = path.get(k);
         tripPlan.addStops(k);
         LocalTime finalV = v;
@@ -54,12 +56,11 @@ public class TripPlanBuilder {
         LocalTime arrivingTime = path.get(path.keySet().stream().reduce((first, second) -> second).get());
 
         if (path.size() > i + 1) {
-          nextStop = keyList.get(i + 1);
+          nextStop = (Stop) keyList.get(i + 1);
         }
 
         if (i == 0) {
           if (nextStop != null && nextStop.getName().equals(k.getName())) {
-            k = nextStop;
             v = path.get(nextStop);
           }
           tripPlan.setStartTime(v);

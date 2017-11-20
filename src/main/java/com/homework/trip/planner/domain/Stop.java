@@ -3,12 +3,9 @@ package com.homework.trip.planner.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Stop {
+public class Stop extends Location {
 
   private int stopId;
-  private String name;
-  private float lat;
-  private float lon;
   private int routeNr;
   private List<Leg> legs = new ArrayList<>();
   private Schedule schedule;
@@ -41,30 +38,6 @@ public class Stop {
 
   public void setStopId(int stopId) {
     this.stopId = stopId;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public float getLat() {
-    return lat;
-  }
-
-  public void setLat(float lat) {
-    this.lat = lat;
-  }
-
-  public float getLon() {
-    return lon;
-  }
-
-  public void setLon(float lon) {
-    this.lon = lon;
   }
 
   public int getRouteNr() {

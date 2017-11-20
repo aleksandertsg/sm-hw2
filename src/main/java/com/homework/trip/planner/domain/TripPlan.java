@@ -10,12 +10,12 @@ public class TripPlan {
 
   private LocalTime endTime;
 
-  private List<Stop> stops;
+  private List<Location> locations;
 
   private String fullPath;
 
   public TripPlan() {
-    this.stops = new ArrayList<>();
+    this.locations = new ArrayList<>();
   }
 
   public TripPlan(String fullPath) {
@@ -38,12 +38,12 @@ public class TripPlan {
     this.endTime = endTime;
   }
 
-  public List<Stop> getStops() {
-    return stops;
+  public List<Location> getStops() {
+    return locations;
   }
 
-  public void addStops(Stop stop) {
-    this.stops.add(stop);
+  public void addStops(Location location) {
+    this.locations.add(location);
   }
 
   public String getFullPath() {
