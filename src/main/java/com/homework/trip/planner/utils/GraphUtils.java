@@ -1,15 +1,18 @@
-package com.homework.trip.planner.domain;
+package com.homework.trip.planner.utils;
+
+import com.homework.trip.planner.domain.Leg;
+import com.homework.trip.planner.domain.Stop;
 
 import java.util.*;
 
-public class Graph {
+public class GraphUtils {
   private Map<Stop, Map<Stop, Integer>> graph = new HashMap<>();
 
 
 
-    private static final Graph instance = new Graph();
+    private static final GraphUtils instance = new GraphUtils();
 
-    private Graph() {
+    private GraphUtils() {
     }
 
 
@@ -24,7 +27,7 @@ public class Graph {
     }
   }
 
-  public Set<Stop> getVertices() {
+  public Set<Stop> getStops() {
     return graph.keySet();
   }
 
@@ -52,7 +55,7 @@ public class Graph {
     }
   }
 
-  public Integer getEdge(Stop one, Stop other) {
+  public Integer getLegDistance(Stop one, Stop other) {
     if (graph.containsKey(one)) {
       if (graph.get(one).containsKey(other)) {
         return graph.get(one).get(other);
@@ -81,7 +84,7 @@ public class Graph {
   }
 
 
-    public static Graph getInstance(){
+    public static GraphUtils getInstance(){
         return instance;
     }
 

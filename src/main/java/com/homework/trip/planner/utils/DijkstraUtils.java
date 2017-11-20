@@ -1,7 +1,6 @@
 package com.homework.trip.planner.utils;
 
 import com.homework.trip.planner.data.DataLoader;
-import com.homework.trip.planner.domain.Graph;
 import com.homework.trip.planner.domain.Schedule;
 import com.homework.trip.planner.domain.Stop;
 
@@ -35,7 +34,7 @@ public class DijkstraUtils {
     return stop1.compareTo(stop2);
   }
 
-  private static LinkedHashMap<Stop, LocalTime> getPath(Graph graph, Stop startingVertex, Stop endingPoint,
+  private static LinkedHashMap<Stop, LocalTime> getPath(GraphUtils graph, Stop startStop, Stop endStop,
                                                         LocalTime time) {
 
     Map<Stop, Double> distances = new HashMap<>();
@@ -51,22 +50,22 @@ public class DijkstraUtils {
       return 0;
     });
 
-    for (Stop vertex : graph.getVertices()) {
+    for (Stop vertex : graph.getStops()) {
       distances.put(vertex, Double.MAX_VALUE);
     }
 
     LinkedHashMap<Stop, LocalTime> leg = new LinkedHashMap<>();
-    leg.put(startingVertex, time);
-    path.put(startingVertex, leg);
-    distances.put(startingVertex, 0.0);
-    times.put(startingVertex, time);
-    unprocessedVertices.add(startingVertex);
+    leg.put(startStop, time);
+    path.put(startStop, leg);
+    distances.put(startStop, 0.0);
+    times.put(startStop, time);
+    unprocessedVertices.add(startStop);
 
     while (!unprocessedVertices.isEmpty()) {
       Stop minVertex = unprocessedVertices.remove();
       LocalTime minBusStartTime;
 
-      if (minVertex != endingPoint) {
+      if (minVertex != endStop) {
         minBusStartTime = minVertex.getSchedule().getTimes().stream()
           .min((d1, d2) -> compare(d1, d2, times.get(minVertex))).get();
       } else {
@@ -75,7 +74,7 @@ public class DijkstraUtils {
 
       for (Stop neighbor : graph.neighboursOf(minVertex)) {
 
-        long tripDuration = graph.getEdge(minVertex, neighbor);
+        long tripDuration = graph.getLegDistance(minVertex, neighbor);
         LocalTime arrivingTime = minBusStartTime.plusMinutes(tripDuration);
         if (neighbor.getName().equals(minVertex.getName())) {
           arrivingTime = times.get(minVertex);
@@ -97,7 +96,7 @@ public class DijkstraUtils {
 
     }
 
-    return path.get(endingPoint);
+    return path.get(endStop);
   }
 
   protected static int compare(LocalTime d1, LocalTime d2, LocalTime time) {
@@ -119,8 +118,7 @@ public class DijkstraUtils {
 
     DataLoader data = DataLoader.getInstance();
 
-
-    Graph graph = Graph.getInstance();
+    GraphUtils graph = GraphUtils.getInstance();
     graph.createGraph(data.getStops(),data.getLegs());
 
     Stop from = findClosestStop(data.getStops(), latFrom, lonFrom);
