@@ -73,7 +73,7 @@ public class TripPlanBuilder {
           if (nextStop != null && nextStop.getName().equals(k.getName())) {
             v = path.get(nextStop);
           }
-          tripPlan.setStartTime(v);
+          tripPlan.setStartTime(startingTime);
           completePath.append("Greetings from Trip planner!\n----------------\n")
             .append("Estimated arriving time is: ")
             .append(arrivingTime)
