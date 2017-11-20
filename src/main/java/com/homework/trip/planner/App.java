@@ -22,7 +22,8 @@ public class App {
 
     TripPlanBuilder tripPlanBuilder = new TripPlanBuilder();
 
-    TripPlan tripPlan = tripPlanBuilder.createTripPlan(59.417229f, 24.797322f, 59.421008f, 24.739687f, time);
+    TripPlan tripPlan = tripPlanBuilder
+      .createTripPlan(59.417229f, 24.797322f, 59.421008f, 24.739687f, time);
 
     System.out.println(tripPlan.getFullPath());
 
