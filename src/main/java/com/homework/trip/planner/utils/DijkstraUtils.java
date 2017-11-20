@@ -41,7 +41,7 @@ public class DijkstraUtils {
     Map<Stop, LocalTime> times = new HashMap<>();
     Map<Stop, LinkedHashMap<Stop, LocalTime>> path = new HashMap<>();
 
-    Queue<Stop> unprocessedVertices = new PriorityQueue<>((one, other) -> {
+    Queue<Stop> unprocessedStops = new PriorityQueue<>((one, other) -> {
       if (distances.get(one) > distances.get(other)) {
         return 1;
       } else if (distances.get(one) < distances.get(other)) {
@@ -59,10 +59,10 @@ public class DijkstraUtils {
     path.put(startStop, leg);
     distances.put(startStop, 0.0);
     times.put(startStop, time);
-    unprocessedVertices.add(startStop);
+    unprocessedStops.add(startStop);
 
-    while (!unprocessedVertices.isEmpty()) {
-      Stop minVertex = unprocessedVertices.remove();
+    while (!unprocessedStops.isEmpty()) {
+      Stop minVertex = unprocessedStops.remove();
       LocalTime minBusStartTime;
 
       if (minVertex != endStop) {
@@ -76,7 +76,7 @@ public class DijkstraUtils {
 
         long tripDuration = graph.getLegDistance(minVertex, neighbor);
         LocalTime arrivingTime = minBusStartTime.plusMinutes(tripDuration);
-        if (neighbor.getName().equals(minVertex.getName())) {
+        if (neighbor.getName().equals(minVertex.getName()) ) {
           arrivingTime = times.get(minVertex);
         }
         Double altPathWeight = (double) Duration.between(time, arrivingTime).toMinutes();
@@ -88,14 +88,14 @@ public class DijkstraUtils {
           path.put(neighbor, clonedLeg);
           times.put(neighbor, arrivingTime);
 
-          if (!unprocessedVertices.contains(neighbor)) {
-            unprocessedVertices.add(neighbor);
+          if (!unprocessedStops.contains(neighbor)) {
+            unprocessedStops.add(neighbor);
           }
         }
       }
 
     }
-
+      System.out.println(path.get(endStop));
     return path.get(endStop);
   }
 

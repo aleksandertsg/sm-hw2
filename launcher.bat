@@ -1,0 +1,1 @@
+java -jar sm-hw2.jar
