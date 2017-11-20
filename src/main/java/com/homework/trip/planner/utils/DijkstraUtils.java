@@ -54,8 +54,6 @@ public class DijkstraUtils {
       distances.put(vertex, Double.MAX_VALUE);
     }
 
-    LocalTime firstBus = startingVertex.getSchedule().getTimes().stream().min((d1, d2) -> compare(d1, d2, time)).get();
-
     LinkedHashMap<Stop, LocalTime> leg = new LinkedHashMap<>();
     leg.put(startingVertex, time);
     path.put(startingVertex, leg);
