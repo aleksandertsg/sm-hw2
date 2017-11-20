@@ -20,11 +20,12 @@ public class App {
 
     String time = "14:03";
 
-    TripPlanBuilder tripPlanBuilder = new TripPlanBuilder();
 
 
-    TripPlan tripPlan = tripPlanBuilder
+    TripPlan tripPlan = TripPlanBuilder
       .createTripPlan("59.414665", "24.737735","59.450498", "24.710056", time);
+
+    System.out.println(tripPlan.getStops());
 
 
     System.out.println(tripPlan.getFullPath());

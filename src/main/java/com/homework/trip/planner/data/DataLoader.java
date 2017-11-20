@@ -61,7 +61,7 @@ public class DataLoader {
         .map(data ->
           new Stop(
             Integer.parseInt(data[STOP_ID]),
-            data[STOP_NAME],
+            data[STOP_NAME].replace("\"",""),
             Float.parseFloat(data[STOP_LAT]),
             Float.parseFloat(data[STOP_LON]),
             Integer.parseInt(data[STOP_R_NR].replace("\"", "")),

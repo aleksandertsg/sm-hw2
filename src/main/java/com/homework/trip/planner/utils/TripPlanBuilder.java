@@ -15,13 +15,7 @@ import java.util.List;
 
 public class TripPlanBuilder {
 
-  public TripPlan createTripPlan(String latFrom, String lonFrom, String latTo, String lonTo, String time) {
-
-    DataLoader data = new DataLoader();
-
-    GraphUtils graph = new GraphUtils();
-
-    graph.createGraph(data.getStops(), data.getLegs());
+  public static  TripPlan createTripPlan(String latFrom, String lonFrom, String latTo, String lonTo, String time) {
 
     DijkstraUtils path = new DijkstraUtils();
 
@@ -48,9 +42,10 @@ public class TripPlanBuilder {
 
   }
 
-  private TripPlan createFullPath(LinkedHashMap<Stop, LocalTime> path, LocalTime startingTime) {
+  private static TripPlan createFullPath(LinkedHashMap<Stop, LocalTime> path, LocalTime startingTime) {
     TripPlan tripPlan = new TripPlan();
     StringBuilder completePath = new StringBuilder();
+    System.out.println(path);
     if (path == null) {
       completePath.append("Sorry, we can't find available plan for you :( ");
     } else {
@@ -115,7 +110,7 @@ public class TripPlanBuilder {
               .append(nextStop.getRouteNr())
               .append("\n----------------\n");
           } else {
-            if (i + 1 != path.size()) {
+            if (i + 2 != path.size()) {
               completePath
                 .append("Tram from stop: ")
                 .append(k)
@@ -123,12 +118,14 @@ public class TripPlanBuilder {
                 .append(busStartTime)
                 .append("\n----------------\n");
             } else {
+              tripPlan.setEndTime(arrivingTime);
               completePath
                 .append("Walking time from stop to your location is: ")
                 .append(Duration.between(v, arrivingTime).toMinutes())
                 .append(" min")
                 .append("\n----------------\n")
                 .append("Thank you for using us!");
+              break;
             }
           }
         }

@@ -12,19 +12,15 @@ public class Stop extends Location {
   private Route route;
 
   public Stop(int stopId, String name, float lat, float lon, int routeNr, Schedule schedule, Route route) {
+    super(name,lat,lon);
     this.stopId = stopId;
-    this.name = name;
-    this.lat = lat;
-    this.lon = lon;
     this.routeNr = routeNr;
     this.schedule = schedule;
     this.route = route;
   }
 
   public Stop(String name, float lat, float lon, Schedule schedule) {
-    this.name = name;
-    this.lat = lat;
-    this.lon = lon;
+    super(name,lat,lon);
     this.schedule = schedule;
   }
 
@@ -78,7 +74,7 @@ public class Stop extends Location {
 
   @Override
   public String toString() {
-    return name + "(" + routeNr + ")";
+    return getName() + "(" + routeNr + ")";
   }
 
 }

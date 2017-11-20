@@ -1,9 +1,19 @@
 package com.homework.trip.planner.domain;
 
 public class Location {
-  protected String name;
-  protected float lat;
-  protected float lon;
+  private String name;
+  private float lat;
+  private float lon;
+
+
+  public Location(String name, float lat, float lon) {
+    this.name = name;
+    this.lat = lat;
+    this.lon = lon;
+  }
+
+  public Location() {
+  }
 
   public String getName() {
     return name;
