@@ -1,6 +1,7 @@
 package com.homework.trip.planner.utils;
 
 import com.homework.trip.planner.data.DataLoader;
+import com.homework.trip.planner.domain.Graph;
 import com.homework.trip.planner.domain.Schedule;
 import com.homework.trip.planner.domain.Stop;
 
@@ -10,7 +11,7 @@ import java.util.*;
 
 public class DijkstraUtils {
 
-  private float distFrom(float lat1, float lng1, float lat2, float lng2) {
+  private static float distFrom(float lat1, float lng1, float lat2, float lng2) {
     double earthRadius = 6371000; //meters
     double dLat = Math.toRadians(lat2 - lat1);
     double dLng = Math.toRadians(lng2 - lng1);
@@ -23,19 +24,19 @@ public class DijkstraUtils {
     return dist;
   }
 
-  private Stop findClosestStop(List<Stop> stops, float lat1, float lng1) {
+  private static Stop findClosestStop(List<Stop> stops, float lat1, float lng1) {
     return stops.stream().min(((d1, d2) -> compare(d1, d2, lat1, lng1))).get();
 
   }
 
-  private int compare(Stop d1, Stop d2, float lat1, float lng1) {
+  private static int compare(Stop d1, Stop d2, float lat1, float lng1) {
     Float stop1 = distFrom(d1.getLat(), d1.getLon(), lat1, lng1);
     Float stop2 = distFrom(d2.getLat(), d2.getLon(), lat1, lng1);
     return stop1.compareTo(stop2);
   }
 
-  public LinkedHashMap<Stop, LocalTime> getPath(GraphUtils graph, Stop startingVertex, Stop endingPoint,
-    LocalTime time) {
+  private static LinkedHashMap<Stop, LocalTime> getPath(Graph graph, Stop startingVertex, Stop endingPoint,
+                                                        LocalTime time) {
 
     Map<Stop, Double> distances = new HashMap<>();
     Map<Stop, LocalTime> times = new HashMap<>();
@@ -99,7 +100,7 @@ public class DijkstraUtils {
     return path.get(endingPoint);
   }
 
-  public static int compare(LocalTime d1, LocalTime d2, LocalTime time) {
+  protected static int compare(LocalTime d1, LocalTime d2, LocalTime time) {
 
     long diff1 = Duration.between(time, d1).toMinutes();
     long diff2 = Duration.between(time, d2).toMinutes();
@@ -113,14 +114,14 @@ public class DijkstraUtils {
 
   }
 
-  public LinkedHashMap<Stop, LocalTime> findOptimalPath(float latFrom, float lonFrom, float latTo, float lonTo,
-    LocalTime time) {
+  public static LinkedHashMap<Stop, LocalTime> findOptimalPath(float latFrom, float lonFrom, float latTo, float lonTo,
+                                                               LocalTime time) {
 
-    DataLoader data = new DataLoader();
+    DataLoader data = DataLoader.getInstance();
 
-    GraphUtils graph = new GraphUtils();
 
-    graph.createGraph(data.getStops(), data.getLegs());
+    Graph graph = Graph.getInstance();
+    graph.createGraph(data.getStops(),data.getLegs());
 
     Stop from = findClosestStop(data.getStops(), latFrom, lonFrom);
 
@@ -143,7 +144,7 @@ public class DijkstraUtils {
     return path;
   }
 
-  private int calculateWalkingMinutes(Float meters) {
+  private static int calculateWalkingMinutes(Float meters) {
 
     return (int) Math.ceil((meters / 1000) * 10);
 

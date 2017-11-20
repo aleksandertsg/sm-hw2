@@ -35,7 +35,9 @@ public class DataLoader {
   private static final int LEG_DURATION = 3;
   private static final int LEG_R_NR = 4;
 
-  public DataLoader() {
+  private static final DataLoader instance = new DataLoader();
+
+  private DataLoader() {
     loadData();
   }
 
@@ -114,6 +116,10 @@ public class DataLoader {
       }
     }
 
+  }
+
+  public static DataLoader getInstance(){
+    return instance;
   }
 
   public List<Stop> getStops() {

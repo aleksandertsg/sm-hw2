@@ -17,7 +17,7 @@ public class TripPlanBuilder {
 
   public static  TripPlan createTripPlan(String latFrom, String lonFrom, String latTo, String lonTo, String time) {
 
-    DijkstraUtils path = new DijkstraUtils();
+
 
     LocalTime startingTime;
 
@@ -30,7 +30,7 @@ public class TripPlanBuilder {
     }
 
     try{
-        return createFullPath(path.findOptimalPath
+        return createFullPath(DijkstraUtils.findOptimalPath
                 (Float.parseFloat(latFrom),Float.parseFloat(lonFrom),
                         Float.parseFloat(latTo),Float.parseFloat(lonTo), startingTime),startingTime);
     }
