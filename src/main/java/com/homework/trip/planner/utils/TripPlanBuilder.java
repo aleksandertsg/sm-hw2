@@ -44,7 +44,7 @@ public class TripPlanBuilder {
         return new TripPlan("Wrong coordinate format");
     }
 
-    
+
 
   }
 
