@@ -1,27 +1,23 @@
 package com.homework.trip.planner.utils;
 
-import com.homework.trip.planner.domain.Stop;
 import com.homework.trip.planner.data.DataLoader;
+import com.homework.trip.planner.domain.Stop;
 import com.homework.trip.planner.domain.TripPlan;
-import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 public class TripPlanBuilder {
 
 
 
 
-    public TripPlan createTripPlan(float latFrom, float lonFrom, float latTo, float lonTo, String time){
+    public TripPlan createTripPlan(String latFrom, String lonFrom, String latTo, String lonTo, String time){
 
         DataLoader data = new DataLoader();
 
@@ -30,18 +26,30 @@ public class TripPlanBuilder {
         graph.createGraph(data.getStops(),data.getLegs());
 
         DijkstraUtils path = new DijkstraUtils();
-        LocalTime startingTime = null;
+        LocalTime startingTime;
+
+
 
         try {
             startingTime = LocalTime.parse(time,DateTimeFormatter.ISO_TIME);
+
 
         }
         catch (DateTimeParseException e){
             return new TripPlan("Wrong time format");
         }
 
+        try{
+            return createFullPath(path.findOptimalPath
+                    (Float.parseFloat(latFrom),Float.parseFloat(lonFrom),
+                            Float.parseFloat(latTo),Float.parseFloat(lonTo), startingTime),startingTime);
+        }
+        catch (Exception e){
+            return new TripPlan("Wrong coordinate format");
+        }
 
-        return createFullPath(path.findOptimalPath(latFrom,lonFrom,latTo,lonTo, startingTime),startingTime);
+
+
 
     }
 
@@ -69,7 +77,6 @@ public class TripPlanBuilder {
 
                 if (i == 0) {
                     if (nextStop != null && nextStop.getName().equals(k.getName())) {
-                        k = nextStop;
                         v = path.get(nextStop);
                     }
                     tripPlan.setStartTime(v);
