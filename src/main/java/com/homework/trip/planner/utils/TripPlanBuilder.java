@@ -16,10 +16,7 @@ import java.util.Map;
 
 public class TripPlanBuilder {
 
-
-
-
-    public TripPlan createTripPlan(String latFrom, String lonFrom, String latTo, String lonTo, String time){
+  public TripPlan createTripPlan(String latFrom, String lonFrom, String latTo, String lonTo, String time) {
 
     DataLoader data = new DataLoader();
 
@@ -34,23 +31,17 @@ public class TripPlanBuilder {
     try {
       startingTime = LocalTime.parse(time, DateTimeFormatter.ISO_TIME);
 
+    } catch (DateTimeParseException e) {
+      return new TripPlan("Wrong time format");
+    }
 
-        }
-        catch (DateTimeParseException e){
-            return new TripPlan("Wrong time format");
-        }
-
-        try{
-            return createFullPath(path.findOptimalPath
-                    (Float.parseFloat(latFrom),Float.parseFloat(lonFrom),
-                            Float.parseFloat(latTo),Float.parseFloat(lonTo), startingTime),startingTime);
-        }
-        catch (Exception e){
-            return new TripPlan("Wrong coordinate format");
-        }
-
-
-
+    try {
+      return createFullPath(path.findOptimalPath
+        (Float.parseFloat(latFrom), Float.parseFloat(lonFrom),
+          Float.parseFloat(latTo), Float.parseFloat(lonTo), startingTime), startingTime);
+    } catch (Exception e) {
+      return new TripPlan("Wrong coordinate format");
+    }
 
   }
 
